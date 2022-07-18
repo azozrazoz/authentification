@@ -8,10 +8,20 @@
     {
         public $num1;
         public $num2;
+        public static bool $instance = false;
 
-        public function __construct($a,$b) {
+        protected function __construct($a, $b) {
             $this->num1 = $a;
             $this->num2 = $b;
+        }
+
+        public static function getInstance($a, $b) {
+            if (Calculator::$instance == false) {
+                Calculator::$instance = true;
+                return new Calculator($a, $b);
+            }
+
+            throw new Exception("It is a singleton pattern!");
         }
 
         public function Result($op) {
@@ -55,12 +65,15 @@
         }
     }  
 
-    function main() {
-        $num_1 = $_POST['num1'];
-        $num_2 = $_POST['num2'];
+    $num_1 = $_POST['num1'];
+    $num_2 = $_POST['num2'];
 
-        $op_index = $_POST['operation'];
-        $calc = new Calculator($num_1, $num_2);
+    $op_index = $_POST['operation'];
+    $calc = Calculator::getInstance($num_1, $num_2);
+
+    function main() {
+        global $calc;
+        global $op_index;
         echo $calc->Result($op_index);    
     }
 ?>
@@ -72,7 +85,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My calculator</title>
-    <link href="style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>    
     <div class="box">
