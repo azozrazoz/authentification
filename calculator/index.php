@@ -4,112 +4,64 @@
     //echo 'Привет, ' . htmlspecialchars($_GET["username"]) . '!<br>';	
     //echo $_POST['operation'];
 
-    abstract class Operation
+    class Calculator
     {
-        public $code;
-        public $name;
-        public $result;
+        public $num1;
+        public $num2;
 
-        public function getValue() {
-            print($this.__toString());
+        public function __construct($a,$b) {
+            $this->num1 = $a;
+            $this->num2 = $b;
         }
 
-        public function __toString() {
-            return $this->$name . $this.$result;
+        public function Result($op) {
+            switch($op) {
+                case 1:                
+                    return "Сложение: ".$this->Sum($this->num1, $this->num2);
+                    break;
+                case 2:
+                    return "Вычитание: " . $this->Min($this->num1, $this->num2);
+                    break;
+                case 3:
+                    return "Умножение: " . $this->Multiply($this->num1, $this->num2);
+                    break;
+                case 4:
+                    return "Деление: " . $this->Divide($this->num1, $this->num2);
+                    break;
+                case 5:
+                    return "Корень 1: " . $this->Root($this->num1, $this->num2);
+                    break;
+            }
         }
-    }
 
-    class Sum extends Operation
-    {
-        public $code = "1";
-        public $name = 'Сумма';
-
-        public function __constructor(int $x, int $y){
-            $result = $x + $y;
+        public function Sum($num1, $num2) {
+            return $num1 + $num2;
         }
-    }
 
-    class Subtract extends Operation
-    {
-        public $code = "2";
-        public $name = 'Вычитание';
-
-        public function __constructor(int $x, int $y){
-            $result = $x - $y;
+        public function Min($num1, $num2) {
+            return $num1 - $num2;
         }
-    }
 
-    class Multiply extends Operation
-    {
-        public $code = "3";
-        public $name = 'Умножение';
-
-        public function __constructor(int $x, int $y){
-            $result = $x * $y;
+        public function Multiply($num1, $num2) {
+            return $num1 * $num2;
         }
-    }
 
-    class Degree extends Operation
-    {
-        public $code = "4";
-        public $name = 'Деление';
-
-        public function __constructor(int $x, int $y){
-            $result = $x / $y;
+        public function Divide($num1, $num2) {
+            return $num1 / $num2;
         }
-    }
 
-    class Root extends Operation
-    {
-        public $code = "5";
-        public $name = 'Корень';
-
-        public function __constructor(int $x, int $y){
-            $root1 = $x ** 0.5;
-            $root2 = $y ** 0.5;
-            $result = "$x, $y";
+        public function Root($num1, $num2) {
+            return strval($num1 ** 0.5) . "<br>Корень 2: " . strval($num2 ** 0.5);
         }
-    }
+    }  
 
     function main() {
         $num_1 = $_POST['num1'];
         $num_2 = $_POST['num2'];
+
         $op_index = $_POST['operation'];
-        $sum = new Sum($num_1, $num_2);
-        $subtract = new Subtract($num_1, $num_2);
-        $multiply = new Multiply($num_1, $num_2);
-        $degree = new Degree($num_1, $num_2);
-        $root = new Root($num_1, $num_2);
-        $op = array(1 => $sum, 2 => $subtract, 3 => $multiply, 4 => $degree, 5 => $root);
-
-        print($op[$op_index]->getValue());
-
-        // switch($op_index){
-        //     case 1:                
-        //         print($op[$op_index]->getValue());
-        //         break;
-        //     case 2:
-        //         $result = $num_1 - $num_2;
-        //         print("Вычитание: $result<br/>");
-        //         break;
-        //     case 3:
-        //         $result = $num_1 * $num_2;
-        //         print("Умножение: $result<br/>");
-        //         break;
-        //     case 4:
-        //         $result = $num_1 / $num_2;
-        //         print("Деление: $result<br/>");
-        //         break;
-        //     case 5:
-        //         $num_1 = pow($num_1, 0.5);
-        //         $num_2 = $num_2 ** 0.5;
-                
-        //         print("Корень первого числа: $num_1<br/>");
-        //         print("Корень второго числа: $num_2<br/>");
-        //         break;
-        //     default:
-        //     break;
-        // }
+        $calc = new Calculator($num_1, $num_2);
+        echo $calc->Result($op_index);    
     }
 ?>
 
