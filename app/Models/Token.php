@@ -11,5 +11,5 @@ class Token extends Model
 
     protected $table = 'tokens';
 
-    protected $primaryKey = 'token_id';
+    protected $primaryKey = 'id';
 }
