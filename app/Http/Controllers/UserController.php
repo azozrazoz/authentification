@@ -48,7 +48,6 @@ class UserController extends Controller
 
     public function show($id)
     {
-        // dd($id);
         $user = User::findOrFail($id);
         return $user;
     }
@@ -60,10 +59,10 @@ class UserController extends Controller
         return $user;
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $user = User::findOrFail($id);
-        
+        $user = User::find($request->id);
+
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
@@ -73,9 +72,9 @@ class UserController extends Controller
         return $user;
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
         $user->delete();
         return Redirect::to('user');
     }
