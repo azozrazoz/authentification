@@ -5,6 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
+function base64url_encode($str) {
+    return rtrim(strtr(base64_encode($str), '+/', '-_'), '=');
+}   
+
 class TokenMiddleware
 {
     /**
@@ -16,16 +20,7 @@ class TokenMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
-    }
-
-    function base64url_encode($str) {
-        return rtrim(strtr(base64_encode($str), '+/', '-_'), '=');
-    }
-
-    function is_jwt_valid($jwt, $secret = 'secret') {
-        
-        $tokenParts = explode('.', $jwt);
+        $tokenParts = explode('.', $request->jwt);
         $header = base64_decode($tokenParts[0]);
         $payload = base64_decode($tokenParts[1]);
         $signature_provided = $tokenParts[2];
@@ -35,7 +30,7 @@ class TokenMiddleware
     
         $base64_url_header = base64url_encode($header);
         $base64_url_payload = base64url_encode($payload);
-        $signature = hash_hmac('SHA256', $base64_url_header . "." . $base64_url_payload, $secret, true);
+        $signature = hash_hmac('SHA256', $base64_url_header . "." . $base64_url_payload, env('SECRET'), true);
         $base64_url_signature = base64url_encode($signature);
     
         $is_signature_valid = ($base64_url_signature === $signature_provided);
@@ -45,5 +40,9 @@ class TokenMiddleware
         } else {
             return TRUE;
         }
+
+
+
+        return $next($request);
     }    
 }

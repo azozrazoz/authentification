@@ -76,6 +76,6 @@ class UserController extends Controller
     {
         $user = User::find($request->id);
         $user->delete();
-        return Redirect::to('user');
+        return Redirect::to('api/user');
     }
 }

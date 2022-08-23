@@ -13,7 +13,7 @@ class CreateToken extends Migration
      */
     public function up()
     {
-        Schema::create('token', function (Blueprint $table) {
+        Schema::create('tokens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('access');
@@ -29,6 +29,6 @@ class CreateToken extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('token');
+        Schema::dropIfExists('tokens');
     }
 }
