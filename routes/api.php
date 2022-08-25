@@ -28,7 +28,6 @@ Route::get('token',[TokenController::class, 'index'])->name('token.index');
 Route::get('token/create',[TokenController::class, 'create'])->name('token.create');
 Route::post('token',[TokenController::class, 'store'])->name('token.store');
 Route::get('token/{id}',[TokenController::class, 'show'])->name('token.show');
-Route::get('token/{id}/edit',[TokenController::class, 'edit'])->name('user.edit');
 Route::put('token/{id}',[TokenController::class, 'update'])->name('token.update');
 Route::delete('token/{id}',[TokenController::class, 'destroy'])->name('token.destroy');
 

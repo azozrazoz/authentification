@@ -2,9 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Token;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+
+function generate_jwt($headers, $payload, $secret = 'secret') {
+    $headers_encoded = base64url_encode(json_encode($headers));
+    
+    $payload_encoded = base64url_encode(json_encode($payload));
+    
+    $signature = hash_hmac('SHA256', "$headers_encoded.$payload_encoded", $secret, true);
+    $signature_encoded = base64url_encode($signature);
+    
+    $jwt = "$headers_encoded.$payload_encoded.$signature_encoded";
+    
+    return $jwt;
+}
+
+function base64url_encode($str) {
+    return rtrim(strtr(base64_encode($str), '+/', '-_'), '=');
+}
 
 class UserController extends Controller
 {
@@ -29,6 +47,14 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->password = $request->password;
         $user->save();
+
+
+        $headers = array('alg'=>'HS256','typ'=>'JWT');
+        $token = new Token();
+        $token->user_id = response()->json($user->id);
+        $token->access = generate_jwt($headers, $user->id, env('SECRET_ACCESS'));
+        $token->refresh = generate_jwt($headers, $user->id, env('SECRET_REFRESH'));
+        $token->save();
 
         return $user;
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\TokenException;
 use App\Models\Token;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class TokenController extends Controller
@@ -12,13 +13,6 @@ class TokenController extends Controller
     public function __invoke()
     {
         return 'tokens';
-    }
-
-    public function index()
-    {
-        $tokens = Token::all();
-
-        return $tokens;
     }
 
     public function create(Request $request)
@@ -33,31 +27,13 @@ class TokenController extends Controller
         return $token;
     }
 
-    public function store(Request $request)
-    {
-        $token = new Token();
-
-        $token->user_id = $request->user_id;
-        $token->access = $request->access;
-        $token->refresh = $request->refresh;
-        $token->save();
-
-        return $token;
-    }
-
-    public function show($id)
+    public function show($user_id)
     {
         try{
-            $token = Token::findOrFail($id);
+            $token = DB::table('tokens')->where('user_id', $user_id)->first();
         } catch(TokenException $exception) {
             return $exception->getMessage();
         }
-        return $token;
-    }
-
-    public function edit($id)
-    {
-        $token = Token::findOrFail($id);
         return $token;
     }
 
