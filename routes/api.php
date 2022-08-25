@@ -24,12 +24,12 @@ Route::get('user/{id}/edit',[UserController::class, 'edit'])->name('user.edit');
 Route::put('user/{id}',[UserController::class, 'update'])->name('user.update');
 Route::delete('user/{id}',[UserController::class, 'destroy'])->name('user.destroy');
 
-Route::get('token',[TokenController::class, 'index'])->name('token.index');
-Route::get('token/create',[TokenController::class, 'create'])->name('token.create');
-Route::post('token',[TokenController::class, 'store'])->name('token.store');
-Route::get('token/{id}',[TokenController::class, 'show'])->name('token.show');
-Route::put('token/{id}',[TokenController::class, 'update'])->name('token.update');
-Route::delete('token/{id}',[TokenController::class, 'destroy'])->name('token.destroy');
+// Route::get('token',[TokenController::class, 'index'])->name('token.index');
+// Route::get('token/create',[TokenController::class, 'create'])->name('token.create');
+// Route::post('token',[TokenController::class, 'store'])->name('token.store');
+// Route::get('token/{id}',[TokenController::class, 'show'])->name('token.show');
+// Route::put('token/{id}',[TokenController::class, 'update'])->name('token.update');
+// Route::delete('token/{id}',[TokenController::class, 'destroy'])->name('token.destroy');
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
