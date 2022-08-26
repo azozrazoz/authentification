@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -24,10 +25,15 @@ Route::get('user/{id}/edit',[UserController::class, 'edit'])->name('user.edit');
 Route::put('user/{id}',[UserController::class, 'update'])->name('user.update');
 Route::delete('user/{id}',[UserController::class, 'destroy'])->name('user.destroy');
 
+Route::get('login', [AuthController::class, 'login']);
+Route::get('register', [AuthController::class, 'register']);
+Route::view('not_found', 'user_not_found');
+Route::view('found', 'welcome');
+
 // Route::get('token',[TokenController::class, 'index'])->name('token.index');
 // Route::get('token/create',[TokenController::class, 'create'])->name('token.create');
 // Route::post('token',[TokenController::class, 'store'])->name('token.store');
-// Route::get('token/{id}',[TokenController::class, 'show'])->name('token.show');
+Route::get('token/{id}',[TokenController::class, 'show'])->name('token.show');
 // Route::put('token/{id}',[TokenController::class, 'update'])->name('token.update');
 // Route::delete('token/{id}',[TokenController::class, 'destroy'])->name('token.destroy');
 

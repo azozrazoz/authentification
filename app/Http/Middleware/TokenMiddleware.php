@@ -2,8 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\TokenController;
+use App\Http\Controllers\UserController;
+use App\Models\Token;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 function base64url_encode($str) {
     return rtrim(strtr(base64_encode($str), '+/', '-_'), '=');
@@ -40,12 +44,25 @@ class TokenMiddleware
         // } else {
         //     return $next($request);
         // }    
+        //->where('user_id', $request->id)->first()
+            
+        dd(Token::find($request->id));
+        $token = Token::findOrFail($request->id);
+        $access_token = $request->header('access_token');
 
-        
-        dd($request->access_token);
+        if ($token->access != $access_token) {
+            return view('user_not_found');
+        } 
 
 
+        // $usercon = new UserController();
+        // $users = $usercon->index();
 
+        // foreach ($users as $user) {
+        //     if ($user->email != $request->email || $user->password != $request->password) {
+        //         return view('user_not_found');
+        //     }
+        // }
 
         return $next($request);    
     }    

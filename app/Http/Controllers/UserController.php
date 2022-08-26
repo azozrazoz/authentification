@@ -25,7 +25,6 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        $this->middleware('token');
         $user = new User();
 
         $user->name = $request->name;
@@ -33,16 +32,6 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->password = $request->password;
         $user->save();
-
-
-        // $headers = array('alg'=>'HS256','typ'=>'JWT');
-        // $token = new Token();
-        // $token->user_id = response()->json($user->id);
-        // $token->access = generate_jwt($headers, $user->id, env('SECRET_ACCESS'));
-        // $token->refresh = generate_jwt($headers, $user->id, env('SECRET_REFRESH'));
-        // $token->save();
-
-        // $token = TokenController::create($user);
 
         return $user;
     }

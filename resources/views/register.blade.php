@@ -129,20 +129,24 @@ img.avatar {
 </head>
 <body>
 
-<h2>Login Form</h2>
+<h2>Register Form</h2>
 
-<form action="/api/found" method="get">
+<form action="/api/user/create" method="get">
 
   <div class="container">
-    
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="name" required>
+
     <label for="psw"><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="email" required>
 
+    <label for="psw"><b>Phone</b></label>
+    <input type="text" placeholder="Enter Phone" name="phone" required>
 
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" required>
         
-    <button class="logButton" style="vertical-align:middle"><span>Login</span></button>
+    <button class="logButton" style="vertical-align:middle"><span>Register</span></button>
     <label>
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label>
