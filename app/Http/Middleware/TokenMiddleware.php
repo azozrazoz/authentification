@@ -42,11 +42,11 @@ class TokenMiddleware
         // }    
 
         
+        dd($request->access_token);
 
 
 
 
-
-        return $next($request->access_token);    
+        return $next($request);    
     }    
 }

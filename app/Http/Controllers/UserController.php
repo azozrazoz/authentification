@@ -25,6 +25,7 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
+        $this->middleware('token');
         $user = new User();
 
         $user->name = $request->name;
@@ -41,9 +42,9 @@ class UserController extends Controller
         // $token->refresh = generate_jwt($headers, $user->id, env('SECRET_REFRESH'));
         // $token->save();
 
-        $token = TokenController::create($user);
+        // $token = TokenController::create($user);
 
-        return $token;
+        return $user;
     }
 
     public function store(Request $request)

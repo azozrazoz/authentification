@@ -67,8 +67,12 @@ class TokenController extends Controller
         $headers = array('alg'=>'HS256','typ'=>'JWT');
         if ($token) {
             $token->user_id = response()->json($request->user_id);
-            $token->access = generate_jwt($headers, json_encode($user->name . ' ' . $user->email), $user->name . env('SECRET_ACCESS'));
-            $token->refresh = generate_jwt($headers, json_encode($user->name . ' ' . $user->email), $user->email . env('SECRET_REFRESH'));
+
+            $token->access = 
+            generate_jwt($headers, json_encode($user->name . ' ' . $user->email), $user->name . env('SECRET_ACCESS'));
+
+            $token->refresh = 
+            generate_jwt($headers, json_encode($user->name . ' ' . $user->email), $user->email . env('SECRET_REFRESH'));
         }
         $token->save();
 
